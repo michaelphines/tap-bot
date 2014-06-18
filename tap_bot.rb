@@ -6,8 +6,19 @@ end
 require 'rubygame'
 
 class TapBot
+  ORIGIN = [0, 0]
+
   def run
-    puts "Hello Tap Bot!"
+    file = File.expand_path("../assets/groupon.png", __FILE__)
+    image = Rubygame::Surface.load(file)
+    screen = Rubygame::Screen.open(image.size)
+    screen.title = File.basename(file)
+    image.blit(screen, ORIGIN)
+
+    loop do
+      screen.update
+      sleep 0.1
+    end
   end
 end
 

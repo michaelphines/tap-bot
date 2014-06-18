@@ -12,3 +12,5 @@ A Raspberry Pi mod to fit in a tap handle.
     # Install gems locally
     bundle install --deployment
 
+    ruby tap_bot.rb
+
