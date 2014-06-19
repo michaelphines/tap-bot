@@ -20,5 +20,5 @@ A Raspberry Pi mod to fit in a tap handle.
 
 
     # Start the client
-    bin/tap_bot
+    sudo bin/tap_bot
 
