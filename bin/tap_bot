@@ -1,0 +1,14 @@
+#! /usr/bin/env ruby
+$LOAD_PATH << File.expand_path("../../lib", __FILE__)
+
+ENV["SDL_FBDEV"] ||= "/dev/fb1"
+
+require 'rubygems'
+require 'bundler/setup'
+
+require 'rubygame'
+Rubygame.init
+at_exit { Rubygame.quit }
+
+require 'tap_bot'
+TapBot.new.run
