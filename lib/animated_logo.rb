@@ -27,8 +27,12 @@ class AnimatedImage
     @image = @images[@ticks.floor % @images.length]
   end
 
+  def width
+    @image.width
+  end
+
   def height
-    @image.size.last
+    @image.height
   end
 
   def fit_to(dimensions)
