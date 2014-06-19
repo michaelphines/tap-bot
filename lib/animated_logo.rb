@@ -27,6 +27,10 @@ class AnimatedImage
     @image = @images[@ticks.floor % @images.length]
   end
 
+  def height
+    @image.size.last
+  end
+
   def fit_to(dimensions)
     fitted_images = @images.map { |i| i.fit_to(dimensions) }
     AnimatedImage.new(fitted_images)
