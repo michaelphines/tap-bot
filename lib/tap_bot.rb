@@ -1,5 +1,6 @@
 require 'hud'
 require 'beer_info'
+require 'slide_deck'
 require 'image_frame'
 require 'animated_logo'
 
@@ -29,21 +30,22 @@ class TapBot
     @clock.enable_tick_events
 
     @hud = Hud.new(@screen, beer_info)
-    @animated_logo = AnimatedImage.new(ANIMATION_DIR).fit_to(@hud.window.size)
-    @image_frame = ImageFrame.new(beer_info, @hud.window.size)
+    @slide_deck = SlideDeck.new
+    @slide_deck << AnimatedImage.new(ANIMATION_DIR).fit_to(@hud.window.size)
+    @slide_deck << ImageFrame.new(beer_info, @hud.window.size)
+
   end
 
   def run
     loop do
       tick_event = @clock.tick
 
-      @animated_logo.update(tick_event.seconds)
-      @image_frame.update
+      @slide_deck.update(tick_event)
 
       @background.blit(@screen, [0, 0])
-      @animated_logo.draw(@screen, @hud.window)
-      @image_frame.draw(@screen, @hud.window)
+      @slide_deck.draw(@screen, @hud.window)
       @hud.draw
+
       @screen.flip
     end
   end

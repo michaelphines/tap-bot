@@ -9,7 +9,7 @@ class ImageFrame
     @beer_info = beer_info
   end
 
-  def update
+  def update(tick_event)
     return if @beer_info.photos.nil? || @beer_info.photos.empty?
 
     @image = Rubygame::Surface.new(@size)

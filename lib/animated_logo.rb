@@ -21,8 +21,8 @@ class AnimatedImage
     @rate = 0.03
   end
 
-  def update(seconds_passed)
-    @ticks += seconds_passed / @rate
+  def update(tick_event)
+    @ticks += tick_event.seconds / @rate
     @ticks = @ticks % @images.length
     @image = @images[@ticks.floor % @images.length]
   end
