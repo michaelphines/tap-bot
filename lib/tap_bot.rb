@@ -1,3 +1,4 @@
+require 'hud'
 require 'animated_logo'
 
 class TapBot
@@ -23,14 +24,15 @@ class TapBot
     @logo = Image.load(LOGO).fit_to([WIDTH, remaining_height])
     @x = [WIDTH - @logo.width, 0].max / 2
     @y = HEIGHT - @logo.height
+
+    @hud = Hud.new
   end
 
   def run
     loop do
       tick_event = @clock.tick
-      @animated_logo.update(tick_event.seconds)
-      @animated_logo.draw(@screen)
-      @logo.blit(@screen, [@x, @y])
+
+      @hud.draw(@screen)
       @screen.flip
     end
   end

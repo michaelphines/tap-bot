@@ -8,6 +8,7 @@ require 'bundler/setup'
 
 require 'rubygame'
 Rubygame.init
+Rubygame::TTF.setup
 at_exit { Rubygame.quit }
 
 require 'tap_bot'
