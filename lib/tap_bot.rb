@@ -20,17 +20,15 @@ class TapBot
     @clock.enable_tick_events
 
     @animated_logo = AnimatedImage.new(ANIMATION_DIR).fit_to(DIMENSIONS)
-    remaining_height = HEIGHT - @animated_logo.height
-    @logo = Image.load(LOGO).fit_to([WIDTH, remaining_height])
-    @x = [WIDTH - @logo.width, 0].max / 2
-    @y = HEIGHT - @logo.height
-
     @hud = Hud.new
   end
 
   def run
     loop do
       tick_event = @clock.tick
+
+      @animated_logo.update(tick_event.seconds)
+      @animated_logo.draw(@screen, WIDTH/2, HEIGHT/2)
 
       @hud.draw(@screen)
       @screen.flip

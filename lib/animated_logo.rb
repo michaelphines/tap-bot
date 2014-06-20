@@ -35,6 +35,13 @@ class AnimatedImage
     @image.height
   end
 
+  def draw(screen, centerx, centery)
+    rect = @image.make_rect
+    rect.centerx = centerx
+    rect.centery = centery
+    @image.blit(screen, rect)
+  end
+
   def fit_to(dimensions)
     fitted_images = @images.map { |i| i.fit_to(dimensions) }
     AnimatedImage.new(fitted_images)
