@@ -3,6 +3,7 @@ require 'beer_info'
 require 'slide_deck'
 require 'image_frame'
 require 'animated_logo'
+require 'description_slide'
 
 class TapBot
   ORIGIN = [0, 0]
@@ -33,6 +34,7 @@ class TapBot
     @slide_deck = SlideDeck.new
     @slide_deck << AnimatedImage.new(ANIMATION_DIR).fit_to(@hud.window.size)
     @slide_deck << ImageFrame.new(beer_info, @hud.window.size)
+    @slide_deck << DescriptionSlide.new(beer_info, @hud.window.size)
 
   end
 

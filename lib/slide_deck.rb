@@ -1,5 +1,5 @@
 class SlideDeck
-  ROTATION_RATE = 15
+  ROTATION_RATE = 30
 
   def initialize(rate = nil)
     @ticks = 0
