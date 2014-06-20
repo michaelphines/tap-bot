@@ -32,11 +32,11 @@ class Hud
   end
 
   def header_height
-    @title_font.line_skip + @brewery_font.line_skip + @style_font.line_skip * 1.5
+    Y_MARGIN + @title_font.line_skip + @brewery_font.line_skip + @style_font.line_skip * 2
   end
 
   def footer_height
-    @stat_font.line_skip * 1.5 + @caption_font.line_skip + @location_font.line_skip * 1.5
+    Y_MARGIN + @stat_font.line_skip * 1.5 + @caption_font.line_skip + @location_font.line_skip * 2
   end
 
   def window

@@ -22,7 +22,7 @@ class UntappdApi < Api
   def show(id)
     results = get(AppConfig.untappd.show, :kimpath2 => id).results
     details = results.details.first
-    photos = results.photos.map(&:photo)
+    photos = results.photos.map { |p| HTTParty.get(p.photo).parsed_response }
 
     details.merge(
       :description => details.description && details.description.gsub(/\s+/, " "),

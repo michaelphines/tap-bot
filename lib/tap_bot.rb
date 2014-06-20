@@ -1,5 +1,6 @@
 require 'hud'
 require 'beer_info'
+require 'image_frame'
 require 'animated_logo'
 
 class TapBot
@@ -29,6 +30,7 @@ class TapBot
 
     @hud = Hud.new(@screen, beer_info)
     @animated_logo = AnimatedImage.new(ANIMATION_DIR).fit_to(@hud.window.size)
+    @image_frame = ImageFrame.new(beer_info, @hud.window.size)
   end
 
   def run
@@ -36,9 +38,11 @@ class TapBot
       tick_event = @clock.tick
 
       @animated_logo.update(tick_event.seconds)
+      @image_frame.update
 
       @background.blit(@screen, [0, 0])
       @animated_logo.draw(@screen, @hud.window)
+      @image_frame.draw(@screen, @hud.window)
       @hud.draw
       @screen.flip
     end
