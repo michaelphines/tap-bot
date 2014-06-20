@@ -16,7 +16,11 @@ class Hud
   FOREGROUND = [255, 255, 255]
   BACKGROUND = [0, 0, 0]
 
-  def initialize
+  attr_reader :beer_info
+
+  def initialize(beer_info)
+    @beer_info = beer_info
+
     @title_font = Rubygame::TTF.new(BOLD, 21)
     @brewery_font = Rubygame::TTF.new(REGULAR, 13)
     @style_font = Rubygame::TTF.new(ITALIC, 13)
@@ -26,20 +30,21 @@ class Hud
   end
 
   def draw_header(screen, x, y)
-    render_text("Eugene", @title_font).blit(screen, [x, y])
+    render_text(beer_info.name || "Loading...", @title_font).blit(screen, [x, y])
     y += @title_font.line_skip
 
-    render_text("Revolution Brewery", @brewery_font).blit(screen, [x, y])
+    render_text(beer_info.brewery, @brewery_font).blit(screen, [x, y])
     y += @brewery_font.line_skip
 
-    render_text("American Porter", @style_font).blit(screen, [x, y])
+    render_text(beer_info.style, @style_font).blit(screen, [x, y])
     y += @style_font.line_skip * 1.5
 
     y
   end
 
   def draw_footer(screen, x, bottom)
-    print_at_centerx_bottom(screen, "Chicago, Illinois, USA", @location_font, X_MAX / 2, bottom)
+    footer = [beer_info.city, beer_info.state, beer_info.country].compact.join(", ")
+    print_at_centerx_bottom(screen, footer, @location_font, X_MAX / 2, bottom)
 
     bottom - @location_font.line_skip * 1.5
   end
@@ -48,9 +53,9 @@ class Hud
     free_width = X_MAX - X_MARGIN * 2
     x_offset = free_width / 4
 
-    draw_stat(screen, "6.8", "ABV", x + x_offset, bottom)
-    draw_stat(screen, "3.78", "Rating", x + x_offset * 2, bottom)
-    draw_stat(screen, "28", "IBU", x + x_offset * 3, bottom)
+    draw_stat(screen, beer_info.abv, "ABV", x + x_offset, bottom)
+    draw_stat(screen, beer_info.rating, "Rating", x + x_offset * 2, bottom)
+    draw_stat(screen, beer_info.ibu, "IBU", x + x_offset * 3, bottom)
   end
 
   def draw_stat(screen, value, caption, centerx, caption_bottom)
@@ -67,7 +72,8 @@ class Hud
   end
 
   def render_text(text, font)
-    font.render_utf8(text, true, FOREGROUND, BACKGROUND)
+    text = " " if text.nil? || text.empty?
+    font.render_utf8(text || " ", true, FOREGROUND, BACKGROUND)
   end
 
   def draw(screen)

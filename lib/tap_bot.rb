@@ -1,4 +1,5 @@
 require 'hud'
+require 'beer_info'
 require 'animated_logo'
 
 class TapBot
@@ -6,12 +7,19 @@ class TapBot
   WIDTH = 240
   HEIGHT = 320
   DIMENSIONS = [WIDTH, HEIGHT]
-  DEFAULT_COLOR = 0
+  DEFAULT_COLOR_DEPTH = 0
+  BACKGROUND_COLOR = [0, 0, 0]
   ANIMATION_DIR = File.expand_path("../../assets/animated_logo", __FILE__)
   LOGO = File.expand_path("../../assets/groupon.png", __FILE__)
 
   def initialize
-    @screen = Rubygame::Screen.open(DIMENSIONS, DEFAULT_COLOR, [Rubygame::FULLSCREEN])
+    beer_info = BeerInfo.new
+    beer_info.begin_updates!
+
+    @screen = Rubygame::Screen.open(DIMENSIONS, DEFAULT_COLOR_DEPTH, [Rubygame::FULLSCREEN])
+
+    @background = Rubygame::Surface.new(DIMENSIONS)
+    @background.fill(BACKGROUND_COLOR)
 
     @screen.show_cursor = false
 
@@ -20,7 +28,7 @@ class TapBot
     @clock.enable_tick_events
 
     @animated_logo = AnimatedImage.new(ANIMATION_DIR).fit_to(DIMENSIONS)
-    @hud = Hud.new
+    @hud = Hud.new(beer_info)
   end
 
   def run
@@ -28,8 +36,9 @@ class TapBot
       tick_event = @clock.tick
 
       @animated_logo.update(tick_event.seconds)
-      @animated_logo.draw(@screen, WIDTH/2, HEIGHT/2)
 
+      @background.blit(@screen, [0, 0])
+      @animated_logo.draw(@screen, WIDTH/2, HEIGHT/2)
       @hud.draw(@screen)
       @screen.flip
     end
