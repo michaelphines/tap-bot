@@ -17,8 +17,10 @@ class Hud
   BACKGROUND = [0, 0, 0]
 
   attr_reader :beer_info
+  attr_reader :screen
 
-  def initialize(beer_info)
+  def initialize(screen, beer_info)
+    @screen = screen
     @beer_info = beer_info
 
     @title_font = Rubygame::TTF.new(BOLD, 21)
@@ -29,7 +31,24 @@ class Hud
     @location_font = Rubygame::TTF.new(REGULAR, 16)
   end
 
-  def draw_header(screen, x, y)
+  def header_height
+    @title_font.line_skip + @brewery_font.line_skip + @style_font.line_skip * 1.5
+  end
+
+  def footer_height
+    @stat_font.line_skip * 1.5 + @caption_font.line_skip + @location_font.line_skip * 1.5
+  end
+
+  def window
+    Rubygame::Rect.new(
+      X_MARGIN,
+      header_height,
+      X_MAX - X_MARGIN * 2,
+      Y_MAX - header_height - footer_height
+    )
+  end
+
+  def draw_header(x, y)
     render_text(beer_info.name || "Loading...", @title_font).blit(screen, [x, y])
     y += @title_font.line_skip
 
@@ -37,33 +56,28 @@ class Hud
     y += @brewery_font.line_skip
 
     render_text(beer_info.style, @style_font).blit(screen, [x, y])
-    y += @style_font.line_skip * 1.5
-
-    y
   end
 
-  def draw_footer(screen, x, bottom)
+  def draw_footer(x, bottom)
     footer = [beer_info.city, beer_info.state, beer_info.country].compact.join(", ")
-    print_at_centerx_bottom(screen, footer, @location_font, X_MAX / 2, bottom)
+    print_at_centerx_bottom(footer, @location_font, X_MAX / 2, bottom)
 
-    bottom - @location_font.line_skip * 1.5
-  end
+    bottom -= @location_font.line_skip * 1.5
 
-  def draw_stats(screen, x, bottom)
     free_width = X_MAX - X_MARGIN * 2
-    x_offset = free_width / 4
+    offsetx = free_width / 4
 
-    draw_stat(screen, beer_info.abv, "ABV", x + x_offset, bottom)
-    draw_stat(screen, beer_info.rating, "Rating", x + x_offset * 2, bottom)
-    draw_stat(screen, beer_info.ibu, "IBU", x + x_offset * 3, bottom)
+    draw_stat(beer_info.abv, "ABV", x + offsetx, bottom)
+    draw_stat(beer_info.rating, "Rating", x + offsetx * 2, bottom)
+    draw_stat(beer_info.ibu, "IBU", x + offsetx * 3, bottom)
   end
 
-  def draw_stat(screen, value, caption, centerx, caption_bottom)
-    print_at_centerx_bottom(screen, caption, @caption_font, centerx, caption_bottom)
-    print_at_centerx_bottom(screen, value, @stat_font, centerx, caption_bottom - @caption_font.line_skip)
+  def draw_stat(value, caption, centerx, caption_bottom)
+    print_at_centerx_bottom(caption, @caption_font, centerx, caption_bottom)
+    print_at_centerx_bottom(value, @stat_font, centerx, caption_bottom - @caption_font.line_skip)
   end
 
-  def print_at_centerx_bottom(screen, text, font, centerx, bottom)
+  def print_at_centerx_bottom(text, font, centerx, bottom)
     surface = render_text(text, font)
     rect = surface.make_rect
     rect.centerx = centerx
@@ -76,9 +90,8 @@ class Hud
     font.render_utf8(text || " ", true, FOREGROUND, BACKGROUND)
   end
 
-  def draw(screen)
-    header_end = draw_header(screen, X_MARGIN, Y_MARGIN)
-    footer_begin = draw_footer(screen, X_MARGIN, Y_MAX - Y_MARGIN)
-    draw_stats(screen, X_MARGIN, footer_begin)
+  def draw
+    draw_header(X_MARGIN, Y_MARGIN)
+    draw_footer(X_MARGIN, Y_MAX - Y_MARGIN)
   end
 end

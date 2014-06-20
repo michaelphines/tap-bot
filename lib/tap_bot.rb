@@ -27,8 +27,8 @@ class TapBot
     @clock.target_framerate = 30
     @clock.enable_tick_events
 
-    @animated_logo = AnimatedImage.new(ANIMATION_DIR).fit_to(DIMENSIONS)
-    @hud = Hud.new(beer_info)
+    @hud = Hud.new(@screen, beer_info)
+    @animated_logo = AnimatedImage.new(ANIMATION_DIR).fit_to(@hud.window.size)
   end
 
   def run
@@ -38,8 +38,8 @@ class TapBot
       @animated_logo.update(tick_event.seconds)
 
       @background.blit(@screen, [0, 0])
-      @animated_logo.draw(@screen, WIDTH/2, HEIGHT/2)
-      @hud.draw(@screen)
+      @animated_logo.draw(@screen, @hud.window)
+      @hud.draw
       @screen.flip
     end
   end

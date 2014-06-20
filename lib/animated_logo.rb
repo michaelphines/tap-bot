@@ -35,10 +35,9 @@ class AnimatedImage
     @image.height
   end
 
-  def draw(screen, centerx, centery)
+  def draw(screen, center_rect)
     rect = @image.make_rect
-    rect.centerx = centerx
-    rect.centery = centery
+    rect.center = center_rect.center
     @image.blit(screen, rect)
   end
 
