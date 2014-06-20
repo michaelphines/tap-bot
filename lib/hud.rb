@@ -13,6 +13,9 @@ class Hud
   X_MAX = 240
   Y_MAX = 320
 
+  FOREGROUND = [255, 255, 255]
+  BACKGROUND = [0, 0, 0]
+
   def initialize
     @title_font = Rubygame::TTF.new(BOLD, 21)
     @brewery_font = Rubygame::TTF.new(REGULAR, 13)
@@ -23,24 +26,20 @@ class Hud
   end
 
   def draw_header(screen, x, y)
-    @title_font.render_utf8("Eugene", true, [255,255,255], [0,0,0]).blit(screen, [x, y])
+    render_text("Eugene", @title_font).blit(screen, [x, y])
     y += @title_font.line_skip
 
-    @brewery_font.render_utf8("Revolution Brewery", true, [255,255,255], [0,0,0]).blit(screen, [x, y])
+    render_text("Revolution Brewery", @brewery_font).blit(screen, [x, y])
     y += @brewery_font.line_skip
 
-    @style_font.render_utf8("American Porter", true, [255,255,255], [0,0,0]).blit(screen, [x, y])
+    render_text("American Porter", @style_font).blit(screen, [x, y])
     y += @style_font.line_skip * 1.5
 
     y
   end
 
   def draw_footer(screen, x, bottom)
-    location = @location_font.render_utf8("Chicago, Illinois, USA", true, [255,255,255], [0,0,0])
-    location_rect = location.make_rect
-    location_rect.centerx = X_MAX / 2
-    location_rect.bottom = bottom
-    location.blit(screen, location_rect)
+    print_at_centerx_bottom(screen, "Chicago, Illinois, USA", @location_font, X_MAX / 2, bottom)
 
     bottom - @location_font.line_skip * 1.5
   end
@@ -55,19 +54,20 @@ class Hud
   end
 
   def draw_stat(screen, value, caption, centerx, caption_bottom)
-    stat_bottom = caption_bottom - @caption_font.line_skip
+    print_at_centerx_bottom(screen, caption, @caption_font, centerx, caption_bottom)
+    print_at_centerx_bottom(screen, value, @stat_font, centerx, caption_bottom - @caption_font.line_skip)
+  end
 
-    caption = @caption_font.render_utf8(caption, true, [255,255,255], [0,0,0])
-    caption_rect = caption.make_rect
-    caption_rect.centerx = centerx
-    caption_rect.bottom = caption_bottom
-    caption.blit(screen, caption_rect)
+  def print_at_centerx_bottom(screen, text, font, centerx, bottom)
+    surface = render_text(text, font)
+    rect = surface.make_rect
+    rect.centerx = centerx
+    rect.bottom = bottom
+    surface.blit(screen, rect)
+  end
 
-    stat = @stat_font.render_utf8(value, true, [255,255,255], [0,0,0])
-    stat_rect = stat.make_rect
-    stat_rect.centerx = centerx
-    stat_rect.bottom = stat_bottom
-    stat.blit(screen, stat_rect)
+  def render_text(text, font)
+    font.render_utf8(text, true, FOREGROUND, BACKGROUND)
   end
 
   def draw(screen)
