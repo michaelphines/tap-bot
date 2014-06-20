@@ -1,0 +1,9 @@
+keg_bot:
+  base: http://my-kegbot-server.example.org/
+  taps: /taps
+untappd:
+  base: http://www.kimonolabs.com/api/
+  search: /bmy1g1o6 # q=Alagash
+  show: /adt4hmly # kimpath2=7600
+  apikey: xxxxxxxxxxxxxxxxxx
+
