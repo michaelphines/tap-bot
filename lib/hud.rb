@@ -3,10 +3,10 @@ require 'rubygame'
 class Hud
   FONT_DIR = File.expand_path("../../assets/fonts", __FILE__)
 
-  REGULAR = File.expand_path("Trebuc.ttf", FONT_DIR)
-  ITALIC = File.expand_path("Trebucit.ttf", FONT_DIR)
-  BOLD = File.expand_path("Trebucbd.ttf", FONT_DIR)
-  BOLD_ITALIC = File.expand_path("Trebucbi.ttf", FONT_DIR)
+  REGULAR = File.expand_path("trebuc.ttf", FONT_DIR)
+  ITALIC = File.expand_path("trebucit.ttf", FONT_DIR)
+  BOLD = File.expand_path("trebucbd.ttf", FONT_DIR)
+  BOLD_ITALIC = File.expand_path("trebucbi.ttf", FONT_DIR)
 
   X_MARGIN = 10
   Y_MARGIN = 10

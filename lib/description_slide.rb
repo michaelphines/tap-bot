@@ -4,7 +4,7 @@ class DescriptionSlide
   include Rubygame::Sprites::Sprite
 
   FONT_DIR = File.expand_path("../../assets/fonts", __FILE__)
-  REGULAR = File.expand_path("Trebuc.ttf", FONT_DIR)
+  REGULAR = File.expand_path("trebuc.ttf", FONT_DIR)
   FOREGROUND = [255,255,255]
   BACKGROUND = [0,0,0]
 
