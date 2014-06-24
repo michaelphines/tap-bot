@@ -15,9 +15,11 @@ class DescriptionSlide
     @font = Rubygame::TTF.new(REGULAR, 10)
   end
 
-  def update(tick_event)
-    return if @beer_info.description.nil?
+  def ready?
+    !@beer_info.description.nil? && !@beer_info.description.empty?
+  end
 
+  def update(tick_event)
     @lines = []
     current_line = ""
     @beer_info.description.split(/\s/).each do |word|

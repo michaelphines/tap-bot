@@ -9,9 +9,11 @@ class ImageFrame
     @beer_info = beer_info
   end
 
-  def update(tick_event)
-    return if @beer_info.photos.nil? || @beer_info.photos.empty?
+  def ready?
+    !@beer_info.photos.nil? && !@beer_info.photos.empty?
+  end
 
+  def update(tick_event)
     @image = Rubygame::Surface.new(@size)
 
     images = @beer_info.photos.map { |p| Image.load_from_string(p).fit_to(@fit_size) }
@@ -23,8 +25,6 @@ class ImageFrame
   end
 
   def draw(screen, center_rect)
-    return unless @image
-
     rect = @image.make_rect
     rect.center = center_rect.center
     @image.blit(screen, rect)
