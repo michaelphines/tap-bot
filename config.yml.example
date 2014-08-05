@@ -1,3 +1,4 @@
+active_tap: Left Tap
 keg_bot:
   base: http://my-kegbot-server.example.org/
   taps: /taps
