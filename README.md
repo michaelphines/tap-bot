@@ -21,9 +21,11 @@ A Raspberry Pi mod to fit in a tap handle.
 
 
     # Start screen at boot
-    # sudo echo 'spi-bcm2708' >> /etc/modules
-    # sudo echo 'fbtft_device' >> /etc/modules
-    # sudo echo 'options fbtft_device name=adafruitts rotate=180 frequency=32000000' >> /etc/modprobe.d/adafruit.conf
+    # sudo vi /etc/modules
+    ## add lines: "spi-bcm2708" and "fbtft_device" to the bottom of the file
+
+    # sudo vi /etc/modprobe.d/adafruit.conf
+    ## add line "options fbtft_device name=adafruitts rotate=180 frequency=32000000" to the bottom of the file
 
 
     # Boot with command line on tap
@@ -55,6 +57,10 @@ A Raspberry Pi mod to fit in a tap handle.
     # Install gems locally
     bundle install --deployment
 
+
+    # Set TapBot to run on boot:
+    # sudo vi /etc/init.d/rc.local
+    ## add "sudo /home/pi/tap-bot/bin/tap_bot &> /home/pi/tap-bot/log/tap-bot.log &" at the bottom of the file
 
     # Start the client
     sudo bin/tap_bot
