@@ -47,9 +47,11 @@ class BeerInfo < Hashie::Mash
   def begin_updates!
     return if @update_thread
     @update_thread = Thread.new do
-      new_info = get_info
-      replace(new_info) if new_info
-      sleep REFRESH_RATE
+      loop do
+        new_info = get_info
+        replace(new_info) if new_info
+        sleep REFRESH_RATE
+      end
     end
   end
 end
