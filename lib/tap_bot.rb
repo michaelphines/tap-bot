@@ -26,7 +26,7 @@ class TapBot
 
     @screen.show_cursor = false
 
-    @clock = Rubygame::Clock.new
+    @clock = Rubygame::Clock.new(:nice => true)
     @clock.target_framerate = 30
     @clock.enable_tick_events
 
