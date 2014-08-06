@@ -62,6 +62,12 @@ A Raspberry Pi mod to fit in a tap handle.
     # sudo vi /etc/init.d/rc.local
     ## add "sudo /home/pi/tap-bot/bin/tap_bot &> /home/pi/tap-bot/log/tap-bot.log &" at the bottom of the file
 
+    # Edit the config file to add your key
+    cd /home/pi/tap-bot
+    cp config.yml.example config.yml
+    vi config.yml
+
+
     # Start the client
     sudo bin/tap_bot
 
