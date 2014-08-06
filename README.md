@@ -60,7 +60,7 @@ A Raspberry Pi mod to fit in a tap handle.
 
     # Set TapBot to run on boot:
     # sudo vi /etc/init.d/rc.local
-    ## add "sudo /home/pi/tap-bot/bin/tap_bot &> /home/pi/tap-bot/log/tap-bot.log &" at the bottom of the file
+    ## add "sudo bash -c 'cd /home/pi/tap-bot/ && bin/tap_bot &>> log/tap-bot.log' &" at the bottom of the file
 
     # Edit the config file to add your key
     cd /home/pi/tap-bot

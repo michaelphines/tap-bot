@@ -17,9 +17,10 @@ class BeerInfo < Hashie::Mash
   def get_info
     keg_bot_info.merge(untappd_info)
   rescue StandardError => e
-    Rails.logger.error("Error fetching data:")
-    Rails.logger.error(e.message)
-    e.backtrace.each { |l| Rails.logger.error(l) }
+    STDERR.puts "Error fetching data:"
+    STDERR.puts e.message
+    e.backtrace.each { |l| STDERR.puts l }
+
     nil
   end
 
