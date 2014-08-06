@@ -8,13 +8,19 @@ class BeerInfo < Hashie::Mash
     def untappd_api
       @untappd_api ||= UntappdApi.new
     end
+
     def keg_bot_api
       @keg_bot_api ||= KegBotApi.new
     end
   end
 
-  def info
+  def get_info
     keg_bot_info.merge(untappd_info)
+  rescue StandardError => e
+    Rails.logger.error("Error fetching data:")
+    Rails.logger.error(e.message)
+    e.backtrace.each { |l| Rails.logger.error(l) }
+    nil
   end
 
   def keg_bot_info
@@ -40,7 +46,8 @@ class BeerInfo < Hashie::Mash
   def begin_updates!
     return if @update_thread
     @update_thread = Thread.new do
-      replace(info)
+      new_info = get_info
+      replace(new_info) if new_info
       sleep REFRESH_RATE
     end
   end
