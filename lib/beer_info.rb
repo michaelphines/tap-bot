@@ -3,6 +3,7 @@ require 'untappd_api'
 
 class BeerInfo < Hashie::Mash
   REFRESH_RATE = 5 * 60
+  RETRY_RATE = 30
 
   class << self
     def untappd_api
@@ -49,8 +50,12 @@ class BeerInfo < Hashie::Mash
     @update_thread = Thread.new do
       loop do
         new_info = get_info
-        replace(new_info) if new_info
-        sleep REFRESH_RATE
+        if new_info
+          replace(new_info)
+          sleep REFRESH_RATE
+        else
+          sleep RETRY_RATE
+        end
       end
     end
   end
