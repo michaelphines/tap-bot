@@ -16,6 +16,10 @@ class SlideDeck
     @slides[@ticks.floor % @slides.length]
   end
 
+  def skip_slide
+    @ticks = (@ticks.floor + 1) % @slides.length
+  end
+
   def update(tick_event)
     @slides, @pending_slides = (@slides + @pending_slides).partition(&:ready?)
 

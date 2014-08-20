@@ -26,6 +26,8 @@ class TapBot
 
     @screen.show_cursor = false
 
+    @queue = Rubygame::EventQueue.new
+
     @clock = Rubygame::Clock.new
     @clock.nice = true
     @clock.target_framerate = 30
@@ -44,6 +46,15 @@ class TapBot
       tick_event = @clock.tick
 
       @slide_deck.update(tick_event)
+
+      @queue.each do |e|
+        case e
+        when Rubygame::QuitEvent
+          return
+        when Rubygame::MouseDownEvent
+          @slide_deck.skip_slide
+        end
+      end
 
       @background.blit(@screen, [0, 0])
       @slide_deck.draw(@screen, @hud.window)
