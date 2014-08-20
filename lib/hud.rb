@@ -73,6 +73,8 @@ class Hud
   end
 
   def draw_stat(value, caption, centerx, caption_bottom)
+    return unless value
+
     print_at_centerx_bottom(caption, @caption_font, centerx, caption_bottom)
     print_at_centerx_bottom(value, @stat_font, centerx, caption_bottom - @caption_font.line_skip)
   end
