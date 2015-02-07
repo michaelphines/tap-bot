@@ -25,7 +25,7 @@ class BeerInfo < Hashie::Mash
     nil
   end
 
-  def keg_bot_info
+  def kegbot_base_info
     response = self.class.keg_bot_api.tap(AppConfig.active_tap)
 
     beer = response.current_keg.beverage
@@ -38,6 +38,27 @@ class BeerInfo < Hashie::Mash
       :state => brewer.origin_state,
       :country => brewer.country
     )
+  end
+
+  def file_base_info
+    lines = File.readlines(AppConfig.beer_name.filename)
+
+    Hashie::Mash.new(
+      :name => lines[0].chomp,
+      :brewery => lines[1].chomp,
+      :city => lines[2].chomp,
+      :state => lines[3].chomp,
+      :country => lines[4].chomp
+    )
+  end
+
+  def keg_bot_info
+    begin
+      case AppConfig.beer_name.type
+      when "file" then file_base_info
+      when "kegbot" then kegbot_base_info
+      end
+    end
   end
 
   def untappd_info

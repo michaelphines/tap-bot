@@ -1,5 +1,6 @@
 active_tap: Left Tap
-keg_bot:
+beer_name:
+  type: kegbot
   base: http://my-kegbot-server.example.org/
   taps: /taps
 untappd:
