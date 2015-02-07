@@ -72,3 +72,7 @@ A Raspberry Pi mod to fit in a tap handle.
     # Start the client
     sudo bin/tap_bot
 
+Logo
+====
+
+Logo is from (gifloop.tumblr.com)[http://gifloop.tumblr.com/post/11267061077/un-gif-dans-ta-gueule-source-blue-mountain]
