@@ -18,7 +18,7 @@ class AnimatedImage
     @rect = @image.make_rect
     @index = 0
     @ticks = 0
-    @rate = 0.03
+    @rate = 0.05
   end
 
   def ready?
