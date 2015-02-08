@@ -38,8 +38,8 @@ A Raspberry Pi mod to fit in a tap handle.
     sudo apt-get upgrade
 
 
-    # Install wireless and zeroconf
-    sudo apt-get install wicd-curses avahi-daemon
+    # Install zeroconf
+    sudo apt-get install avahi-daemon
 
 
     # Install a non-broken version of Ruby to the Pi
