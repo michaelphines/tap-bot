@@ -9,7 +9,7 @@ GEM
   remote: https://rubygems.org/
   specs:
     diff-lcs (1.2.5)
-    ffi (1.9.3)
+    ffi (1.11.1)
     hashie (3.0.0)
     httparty (0.13.1)
       json (~> 1.8)
